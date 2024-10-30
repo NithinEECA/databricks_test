@@ -26,13 +26,11 @@ jobs:
           DATABRICKS_BUNDLE_ENV: prod
 
   # Validate, deploy, and then run the bundle.
-pipeline_update:
-  name: "Run pipeline update"
-  runs-on: ubuntu-latest
-
-    # Run the "deploy" job first.
-  needs:
-    - deploy
+  pipeline_update:
+    name: "Run pipeline update"
+    runs-on: ubuntu-latest
+    needs:
+      - deploy
 
     steps:
       # Check out this repo, so that this workflow can access it.
