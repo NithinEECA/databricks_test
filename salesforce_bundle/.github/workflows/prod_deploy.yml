@@ -1,4 +1,4 @@
-name: "QA deployment test"
+name: "QA deployment"
 concurrency: 1
 on:
   workflow_dispatch:
