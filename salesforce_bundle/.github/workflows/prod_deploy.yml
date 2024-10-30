@@ -28,11 +28,13 @@ jobs:
 
       # Deploy the bundle to the "prod" target as defined
       # in the bundle's settings file.
-      - run: databricks bundle deploy
+      - name: Deploy Bundle
+        run: databricks bundle deploy --env stag
         working-directory: .
         env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
-          DATABRICKS_BUNDLE_ENV: prod
+          DATABRICKS_BUNDLE_ENV: stag
 
   # Validate, deploy, and then run the bundle.
   pipeline_update:
@@ -52,8 +54,9 @@ jobs:
 
       # Run the Databricks workflow named "my-job" as defined in the
       # bundle that was just deployed.
-      - run: databricks bundle run salesforce_ingestion_job_dev --refresh-all
+      - run: databricks bundle run salesforce_ingestion_job_stag --refresh-all
         working-directory: .
         env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
-          DATABRICKS_BUNDLE_ENV: dev
+          DATABRICKS_BUNDLE_ENV: stag
