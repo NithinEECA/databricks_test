@@ -1,0 +1,38 @@
+resources:
+  jobs:
+    salesforce_ingestion_job:
+      name: "Salesforce_Ingestion_Job_${bundle.target}"
+
+      email_notifications:
+        on_failure:
+          - nithin.thomas@eeca.govt.nz
+
+      tasks:
+      - task_key: salesforce_to_filepath
+        notebook_task:
+          notebook_path: ../src/salesforce_to_filepath.py
+        job_cluster_key: "SF_JOB_CLUSTER"
+
+      - task_key: dlt_salesforce_bronze_ingestion
+        depends_on:
+            - task_key: salesforce_to_filepath
+        pipeline_task:
+          pipeline_id: "${resources.pipelines.DLT_raw_salesforce_bronze_pipeline.id}" # Reference the pipeline from above
+      
+      - task_key: dlt_salesforce_silver_ingestion
+        depends_on:
+            - task_key: dlt_salesforce_bronze_ingestion
+        pipeline_task:
+          pipeline_id: "${resources.pipelines.DLT_Silver_salesforce_pipeline.id}" # Reference the pipeline from abov
+      
+      job_clusters:
+        - job_cluster_key: "SF_JOB_CLUSTER"
+          new_cluster:
+              spark_version: 15.4.x-scala2.12    # 13.3.x-scala2.12
+              node_type_id: Standard_DS3_v2
+              num_workers: 1                     # Number of workers for the cluster
+              autoscale:
+                min_workers: 1
+                max_workers: 2
+              spark_conf:
+                "spark.executor.memory": "1g"    # Memory configuration for executors

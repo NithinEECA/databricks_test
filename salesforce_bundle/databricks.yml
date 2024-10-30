@@ -1,0 +1,33 @@
+bundle:
+  name: salesforce_bundle
+
+include:
+  - resources/*.yml
+
+targets:
+  dev:
+    mode: development
+    default: true
+    workspace:
+      host: https://adb-4492204478815460.0.azuredatabricks.net
+      root_path: /Workspace/Data Team/${bundle.name}/${bundle.environment}/${workspace.current_user.userName}/
+  
+  stag:
+    mode: production
+    workspace:
+      host: https://adb-4492204478815460.0.azuredatabricks.net
+      root_path: /Workspace/Data Team/${bundle.name}/${bundle.environment}/
+    run_as:
+      user_name: ${workspace.current_user.userName}
+
+  prod:
+    mode: production
+    workspace:
+      host: https://adb-4492204478815460.0.azuredatabricks.net #Add Production host
+      root_path: /Workspace/Data Team/${bundle.name}/${bundle.environment}/
+    run_as:
+      user_name: ${workspace.current_user.userName}
+
+workspace:
+  host: "${targets.${bundle.environment}.workspace.host}"  # Dynamically set based on environment
+  root_path: "${targets.${bundle.environment}.workspace.root_path}"
