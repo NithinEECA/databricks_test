@@ -1,5 +1,4 @@
 name: "QA deployment"
-#deploy
 concurrency: 1
 
 on:
