@@ -1,0 +1,6 @@
+- run: databricks bundle deploy --bundle-config ./salesforce_bundle/databricks.yml
+  working-directory: ./salesforce_bundle
+  env:
+    DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+    DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
+    DATABRICKS_BUNDLE_ENV: stag
