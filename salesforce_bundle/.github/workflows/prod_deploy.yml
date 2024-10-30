@@ -1,4 +1,4 @@
-name: "QA deployment"
+name: "QA deployment test"
 concurrency: 1
 
 on:
