@@ -9,7 +9,7 @@ import pyspark.sql.functions as F
 
 object_file_path = f"/Volumes/hub_dev_bronze/salesforce/raw_files_sf/sf_objects.txt"
 
-# Function to read Salesforce object names from the file
+# Function to read Salesforce object names from the file sample
 def read_object_names(file_path):
     with open(file_path, 'r') as file:
         object_names = [line.strip() for line in file.readlines()]
