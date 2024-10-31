@@ -1,4 +1,4 @@
-name: "salesforce_Bundle_dev"
+name: "salesforce_bundle_dev"
 concurrency: 1
 
 on:

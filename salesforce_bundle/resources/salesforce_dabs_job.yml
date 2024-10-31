@@ -17,13 +17,13 @@ resources:
         depends_on:
             - task_key: salesforce_to_filepath
         pipeline_task:
-          pipeline_id: "${resources.pipelines.DLT_raw_salesforce_bronze_pipeline.id}" # Reference the pipeline from above
+          pipeline_id: "${resources.pipelines.DLT_raw_salesforce_bronze_pipeline.id}"
       
       - task_key: dlt_salesforce_silver_ingestion
         depends_on:
             - task_key: dlt_salesforce_bronze_ingestion
         pipeline_task:
-          pipeline_id: "${resources.pipelines.DLT_Silver_salesforce_pipeline.id}" # Reference the pipeline from abov
+          pipeline_id: "${resources.pipelines.DLT_Silver_salesforce_pipeline.id}"
       
       job_clusters:
         - job_cluster_key: "SF_JOB_CLUSTER"
