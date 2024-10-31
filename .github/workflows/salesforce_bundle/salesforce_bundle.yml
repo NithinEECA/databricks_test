@@ -1,4 +1,4 @@
-name: "Stag deployment test"
+name: "Stag deployment testing"
 concurrency: 1
 
 on:
