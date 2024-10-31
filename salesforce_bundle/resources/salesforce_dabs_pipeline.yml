@@ -10,20 +10,20 @@ resources:
       catalog: hub_dev_bronze
       target: salesforce
       continuous: false
-      edition: CORE                           # To reduce dbricks cost
-      photon: false                           # To reduce dbicks cost
+      edition: CORE
+      photon: false
       configuration:
         "pipelines.clusterShutdown.delay": "5s"
       clusters:
         - label: default
           num_workers: 1
-          node_type_id: "Standard_DS3_v2"     # Use a lower-cost node type
+          node_type_id: "Standard_DS3_v2"
           autoscale:
-            min_workers: 1                    # Allow scaling down to 1 worker
-            max_workers: 2                    # Allow scaling up to 2 workers max
-          #spark_version: "13.3.x-scala2.12"  # Keep the latest Spark version
+            min_workers: 1
+            max_workers: 2
+          #spark_version: "13.3.x-scala2.12"
           spark_conf:
-            "spark.executor.memory": "1g"     # Set memory for executors to 1 GB
+            "spark.executor.memory": "1g"
     
     DLT_Silver_salesforce_pipeline:
       name: "DLT_Silver_salesforce_pipeline_${bundle.target}"
@@ -34,17 +34,17 @@ resources:
       catalog: hub_dev_silver
       target: salesforce
       continuous: false
-      edition: PRO                            # To reduce dbricks cost
-      photon: false                           # To reduce dbicks cost
+      edition: PRO
+      photon: false
       configuration:
         "pipelines.clusterShutdown.delay": "5s"
       clusters:
         - label: default
           num_workers: 1
-          node_type_id: "Standard_DS3_v2"     # Use a lower-cost node type
+          node_type_id: "Standard_DS3_v2"
           autoscale:
-            min_workers: 1                    # Allow scaling down to 1 worker
-            max_workers: 2                    # Allow scaling up to 2 workers ma
-          #spark_version: "13.3.x-scala2.12"  # Keep the latest Spark version
+            min_workers: 1
+            max_workers: 2
+          #spark_version: "13.3.x-scala2.12"
           spark_conf:
-            "spark.executor.memory": "1g"     # Set memory for executors to 1 GB
+            "spark.executor.memory": "1g"
