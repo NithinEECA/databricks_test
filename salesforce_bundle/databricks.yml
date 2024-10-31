@@ -20,7 +20,7 @@ targets:
       host: https://adb-4492204478815460.0.azuredatabricks.net
       root_path: /Workspace/Data Team/${bundle.name}/${bundle.environment}/
     run_as:
-      user_name: ${workspace.current_user.userName}
+      service_principal_name: 586344e0-7f47-441a-8064-b643c8fb090b
 
   prod:
     mode: production
