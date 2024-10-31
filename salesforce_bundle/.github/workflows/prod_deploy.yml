@@ -1,11 +1,12 @@
-name: "QA deployment"
-
+name: "QA deployment test"
 concurrency: 1
 
 on:
   push:
     branches:
       - main
+    paths:
+      - "salesforce_bundle/**"
 
 jobs:
   deploy:
@@ -14,25 +15,23 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: databricks/setup-cli@v1
+      - uses: databricks/setup-cli@main
 
       # Deploy the bundle to the "prod" target as defined
       # in the bundle's settings file.
       - run: databricks bundle deploy
-        working-directory: .
+        working-directory: ./salesforce_bundle
         env:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
-          DATABRICKS_BUNDLE_ENV: prod
+          DATABRICKS_BUNDLE_ENV: stag
 
   # Validate, deploy, and then run the bundle.
-pipeline_update:
-  name: "Run pipeline update"
-  runs-on: ubuntu-latest
-
-    # Run the "deploy" job first.
-  needs:
-    - deploy
+  pipeline_update:
+    name: "Run pipeline update"
+    runs-on: ubuntu-latest
+    needs:
+      - deploy
 
     steps:
       # Check out this repo, so that this workflow can access it.
@@ -43,8 +42,8 @@ pipeline_update:
 
       # Run the Databricks workflow named "my-job" as defined in the
       # bundle that was just deployed.
-      - run: databricks bundle run salesforce_ingestion_job_stag --refresh-all
-        working-directory: .
+      - run: databricks bundle run salesforce_ingestion_job --refresh-all
+        working-directory: ./salesforce_bundle
         env:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
