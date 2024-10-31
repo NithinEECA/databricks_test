@@ -40,7 +40,7 @@ jobs:
 
       # Run the Databricks workflow named "my-job" as defined in the
       # bundle that was just deployed.
-      - run: databricks bundle run Salesforce_Ingestion_Job_stag --refresh-all
+      - run: databricks bundle run salesforce_ingestion_job --refresh-all
         working-directory: ./salesforce_bundle
         env:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
