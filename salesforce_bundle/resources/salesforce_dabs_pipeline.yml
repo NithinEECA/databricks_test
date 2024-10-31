@@ -2,7 +2,7 @@ resources:
   pipelines:
   # DLT pipeline
     DLT_raw_salesforce_bronze_pipeline:
-      name: "DLT_Raw_Salesforce_Bronze_Pipeline_${bundle.target}"
+      name: "DLT_Rawww_Salesforce_Bronze_Pipeline_${bundle.target}"
       libraries:
         - notebook:
             path: ../src/dbricks_local_to_bronze_RAW.py
